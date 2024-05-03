@@ -19,8 +19,10 @@ void iterators()
          << v.size(); // displays the size of the array
     v.pop_back();     // pops the last element
     v1.swap(v2);      // swap these to vectors
-    v.clear();        // empty the entire vector
+    v.clear(); 
+           // empty the entire vector
 }
+
 int main()
 {
     iterators();
