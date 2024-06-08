@@ -1,58 +1,53 @@
 #include <iostream>
-#include <unordered_map>
-#include <list>
-#include <stack>
+#include <bits/stdc++.h>
 using namespace std;
-
-class Graph {
-    int V;
-    unordered_map<int, list<int>> adj;
-
-    void topologicalSortUtil(int v, unordered_map<int, bool>& visited, stack<int>& Stack);
-
+class graph
+{
 public:
-    Graph(int V);
-    void addEdge(int v, int w);
-    void topologicalSort();
+    unordered_map<int, list<int>> adj;
+    void addEdge(int u, int v)
+    {
+        adj[u].push_back(v);
+    }
+
+    void toposort(int V)
+    {
+
+        stack<int> st;
+        unordered_map<int, bool> visited;
+        for (int i = 0; i < V; i++)
+        {
+            visited[i] = 0;
+        }
+        for (int i = 0; i < V; i++)
+        {
+            if (!visited[i])
+                toposort1(i, visited, st);
+        }
+        while (!st.empty())
+        {
+            cout << st.top() << " ";
+            st.pop();
+        }
+    }
+
+    void toposort1(int node, unordered_map<int, bool> &visited, stack<int> &st)
+    {
+        visited[node] = true;
+        for (auto neighbour : adj[node])
+        {
+            if (!visited[neighbour])
+            {
+                toposort1(neighbour, visited, st);
+            }
+        }
+        st.push(node);
+    }
 };
 
-Graph::Graph(int V) {
-    this->V = V;
-}
-
-void Graph::addEdge(int v, int w) {
-    adj[v].push_back(w);
-}
-
-void Graph::topologicalSortUtil(int v, unordered_map<int, bool>& visited, stack<int>& Stack) {
-    visited[v] = true;
-    for (int neighbor : adj[v]) {
-        if (!visited[neighbor])
-            topologicalSortUtil(neighbor, visited, Stack);
-    }
-    Stack.push(v);
-}
-
-void Graph::topologicalSort() {
-    stack<int> Stack;
-    unordered_map<int, bool> visited;
-    for (int i = 0; i < V; ++i)
-        visited[i] = false;
-
-    for (int i = 0; i < V; ++i) {
-        if (!visited[i])
-            topologicalSortUtil(i, visited, Stack);
-    }
-
-    cout << "Topological Sort: ";
-    while (!Stack.empty()) {
-        cout << Stack.top() << " ";
-        Stack.pop();
-    }
-}
-
-int main() {
-    Graph g(6);
+int main()
+{
+    graph g;
     g.addEdge(5, 2);
     g.addEdge(5, 0);
     g.addEdge(4, 0);
@@ -61,7 +56,7 @@ int main() {
     g.addEdge(3, 1);
 
     cout << "Following is a Topological Sort of the given graph: ";
-    g.topologicalSort();
+    g.toposort(6);
 
     return 0;
 }
