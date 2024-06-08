@@ -16,32 +16,32 @@ public:
         }
     }
 
-   void dfs(int node){
-     cout<<node<<" ";
-      visited[node]=1;
-     for(auto i:adj[node]){
-      if(!visited[i]){
-        dfs(i);
-      }
-     }
-
-   } 
-
+    void dfs(int node)
+    {
+        cout << node << " ";
+        visited[node] = 1;
+        for (auto i : adj[node])
+        {
+            if (!visited[i])
+            {
+                dfs(i);
+            }
+        }
+    }
 };
 
 int main()
 {
-   
+
     graph g;
- 
-        g.addEdge(0,1,0);
-        g.addEdge(0,2 , 0);
-        g.addEdge(2,1 , 0);
-        g.addEdge(4,2 , 0);
-        g.addEdge(5,1 , 0);
-    
-  
+
+    g.addEdge(0, 1, 0);
+    g.addEdge(0, 2, 0);
+    g.addEdge(2, 1, 0);
+    g.addEdge(4, 2, 0);
+    g.addEdge(5, 1, 0);
+
     g.dfs(0);
-    
+
     return 0;
 }
