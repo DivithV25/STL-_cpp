@@ -13,17 +13,19 @@ public:
     void toposort(int V)
     {
 
-        stack<int> st;
+        stack<int> st;//using stack to store the last node
         unordered_map<int, bool> visited;
         for (int i = 0; i < V; i++)
         {
             visited[i] = 0;
         }
+        //redursive call of the toposort funciton
         for (int i = 0; i < V; i++)
         {
             if (!visited[i])
                 toposort1(i, visited, st);
         }
+        //printing it
         while (!st.empty())
         {
             cout << st.top() << " ";
@@ -33,6 +35,7 @@ public:
 
     void toposort1(int node, unordered_map<int, bool> &visited, stack<int> &st)
     {
+        //marking the node as visited
         visited[node] = true;
         for (auto neighbour : adj[node])
         {
@@ -41,10 +44,11 @@ public:
                 toposort1(neighbour, visited, st);
             }
         }
+        //at last the last node is pushed into the stack and the poping order is the trversal order
         st.push(node);
     }
 };
-
+    
 int main()
 {
     graph g;
